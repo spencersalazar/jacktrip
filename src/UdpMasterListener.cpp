@@ -83,10 +83,12 @@ UdpMasterListener::UdpMasterListener(int server_port) :
     // mBasePort = ( rand() % ( (65535 - gMaxThreads) - 49152 ) ) + 49152;
 
     // SoundWIRE ports open are UDP 61000-62000
-    mBasePort = 61000;
+    // (server_port - gDefaultPort) apply TCP offset to UDP too
+    mBasePort = 61000 + (server_port - gDefaultPort);
 
     mUnderRunMode = JackTrip::WAVETABLE;
     mBufferQueueLength = gDefaultQueueLength;
+    cout << "@@@@@@@@@ UdpMasterListener Constructed" << endl;
 }
 
 
