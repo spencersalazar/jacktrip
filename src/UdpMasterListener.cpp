@@ -182,6 +182,7 @@ void UdpMasterListener::run()
             }
             // Assign server port and send it to Client
             server_udp_port = mBasePort+id;
+            cout << "&&&& JackTrip HUB SERVER: server udp port " << server_udp_port << endl;
             if ( sendUdpPort(clientConnection, server_udp_port) == 0 ) {
                 clientConnection->close();
                 delete clientConnection;
