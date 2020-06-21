@@ -662,7 +662,7 @@ int JackTrip::clientPingToServerStart()
     // Connect Socket to Server and wait for response
     // ----------------------------------------------
     tcpClient.connectToHost(serverHostAddress, mTcpServerPort);
-    if (gVerboseFlag) cout << "Connecting to TCP Server..." << endl;
+    if (gVerboseFlag) cout << "Connecting to TCP Server " << serverHostAddress.toString().toStdString()  << endl;
     if (!tcpClient.waitForConnected()) {
         std::cerr << "TCP Socket ERROR: " << tcpClient.errorString().toStdString() <<  endl;
         //std::exit(1);
@@ -675,6 +675,7 @@ int JackTrip::clientPingToServerStart()
     // ---------------------------------
     char port_buf[sizeof(mReceiverBindPort)];
     std::memcpy(port_buf, &mReceiverBindPort, sizeof(mReceiverBindPort));
+    std::cout << "mReceiverBindPort: " << mReceiverBindPort << endl;
 
     tcpClient.write(port_buf, sizeof(mReceiverBindPort));
     while ( tcpClient.bytesToWrite() > 0 ) {
@@ -701,12 +702,12 @@ int JackTrip::clientPingToServerStart()
     //char port_buf[size];
     tcpClient.read(port_buf, size);
     std::memcpy(&udp_port, port_buf, size);
-    //cout << "Received UDP Port Number: " << udp_port << endl;
+    cout << "Received UDP Port Number from Server: " << udp_port << endl;
 
     // Close the TCP Socket
     // --------------------
     tcpClient.close(); // Close the socket
-    //cout << "TCP Socket Closed!" << endl;
+    cout << "TCP Socket Closed!" << endl;
     if (gVerboseFlag) cout << "Connection Succesfull!" << endl;
 
     // Set with the received UDP port

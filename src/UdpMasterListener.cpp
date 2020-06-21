@@ -119,6 +119,8 @@ void UdpMasterListener::run()
     // Create and bind the TCP server
     // ------------------------------
     QTcpServer TcpServer;
+    cout << "***************mServerPort: " << mServerPort << endl;
+ 
     if ( !TcpServer.listen(QHostAddress::Any, mServerPort) ) {
         std::cerr << "TCP Socket Server ERROR: " << TcpServer.errorString().toStdString() <<  endl;
         std::exit(1);
