@@ -96,7 +96,7 @@ private:
     int mPeerPortNum; ///< Peer Port Number
     char* mClientName; ///< JackClient Name
     bool mUnderrrunZero; ///< Use Underrun to Zero mode
-
+    JackTrip::underrunModeT mUnderRunMode;
 #ifdef WAIR // wair
     int mNumNetRevChans; ///< Number of Network Audio Channels (net comb filters)
     int mClientAddCombLen; ///< cmd line adjustment of net comb

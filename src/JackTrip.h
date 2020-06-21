@@ -140,7 +140,8 @@ public:
              int receiver_bind_port = gDefaultPort,
              int sender_bind_port = gDefaultPort,
              int receiver_peer_port = gDefaultPort,
-             int sender_peer_port = gDefaultPort);
+             int sender_peer_port = gDefaultPort,
+             int tcp_peer_port = gDefaultPort);
 
     /// \brief The class destructor
     virtual ~JackTrip();
@@ -220,7 +221,7 @@ public:
         mSenderBindPort = port;
     }
     /// \brief Sets port numbers for the peer (remote) machine.
-    virtual void setPeerPorts(int port)
+    void setPeerPorts(int port)
     {
         mSenderPeerPort = port;
         mReceiverPeerPort = port;

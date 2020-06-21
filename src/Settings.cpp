@@ -86,7 +86,8 @@ Settings::Settings() :
     mChanfeDefaultBS(false),
     mHubConnectionMode(JackTrip::SERVERTOCLIENT),
     mConnectDefaultAudioPorts(true),
-    mIOStatTimeout(0)
+    mIOStatTimeout(0),
+    mUnderRunMode(JackTrip::WAVETABLE)
 {}
 
 //*******************************************************************************
@@ -431,7 +432,8 @@ void Settings::printUsage()
 //*******************************************************************************
 void Settings::startJackTrip()
 {
-
+    cout << "$$$$$$$ mJackTripServer " << mJackTripServer << endl;
+    cout << "%%%%%%% right before Server case UdpMasterListener mBindPortNum: " << mBindPortNum << endl;
     /// \todo Change this, just here to test
     if ( mJackTripServer ) {
         UdpMasterListener* udpmaster = new UdpMasterListener(mBindPortNum);
@@ -478,7 +480,15 @@ void Settings::startJackTrip()
                          #ifdef WAIR // wair
                                  mNumNetRevChans,
                          #endif // endwhere
-                                 mBufferQueueLength, mRedundancy, mAudioBitResolution);
+                                 mBufferQueueLength, mRedundancy, mAudioBitResolution,
+                                 /*DataProtocol::packetHeaderTypeT PacketHeaderType = */DataProtocol::DEFAULT,
+                                 /*underrunModeT UnderRunMode = */ mUnderRunMode,
+                                 /* int receiver_bind_port = */ gDefaultPort,
+                                 /*int sender_bind_port = */ gDefaultPort,
+                                 /*int receiver_peer_port = */ gDefaultPort,
+                                 /* int sender_peer_port = */ gDefaultPort,
+                                 mPeerPortNum
+                                 );
 
         // Set connect or not default audio ports. Only work for jack
         mJackTrip->setConnectDefaultAudioPorts(mConnectDefaultAudioPorts);
@@ -513,6 +523,7 @@ void Settings::startJackTrip()
         if (gVerboseFlag) std::cout << "Settings:startJackTrip before mJackTrip->setBindPorts" << std::endl;
         mJackTrip->setBindPorts(mBindPortNum);
         if (gVerboseFlag) std::cout << "Settings:startJackTrip before mJackTrip->setPeerPorts" << std::endl;
+        std::cout << "mPeerPortNum in Settings mJackTrip->setPeerPorts!!!!!!! " << mPeerPortNum << std::endl;
         mJackTrip->setPeerPorts(mPeerPortNum);
 
         // Set in JamLink Mode

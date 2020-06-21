@@ -204,6 +204,7 @@ void JackTripWorker::run()
         //ClientAddress.toString().toLatin1().constData();
         //jacktrip.setPeerAddress(ClientAddress.toString().toLatin1().constData());
         jacktrip.setPeerAddress(mClientAddress.toLatin1().constData());
+         std::cout << "setBindPorts@@@@@@@@@@ " << mServerPort << endl;       
         jacktrip.setBindPorts(mServerPort);
         //jacktrip.setPeerPorts(mClientPort);
 

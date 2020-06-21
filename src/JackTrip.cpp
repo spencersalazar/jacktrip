@@ -79,7 +79,7 @@ JackTrip::JackTrip(jacktripModeT JacktripMode,
                    DataProtocol::packetHeaderTypeT PacketHeaderType,
                    underrunModeT UnderRunMode,
                    int receiver_bind_port, int sender_bind_port,
-                   int receiver_peer_port, int sender_peer_port) :
+                   int receiver_peer_port, int sender_peer_port, int tcp_peer_port) :
     mJackTripMode(JacktripMode),
     mDataProtocol(DataProtocolType),
     mPacketHeaderType(PacketHeaderType),
@@ -104,7 +104,7 @@ JackTrip::JackTrip(jacktripModeT JacktripMode,
     mSenderPeerPort(sender_peer_port),
     mSenderBindPort(sender_bind_port),
     mReceiverPeerPort(receiver_peer_port),
-    mTcpServerPort(4464),
+    mTcpServerPort(tcp_peer_port),
     mRedundancy(redundancy),
     mJackClientName("JackTrip"),
     mConnectionMode(JackTrip::NORMAL),
@@ -341,8 +341,10 @@ void JackTrip::startProcess(
              << mReceiverBindPort<< mSenderBindPort;
     //        msleep(2000);
 #endif
+    std::cout << " ^^^^^^^^^mReceiverBindPort " << mReceiverBindPort << std::endl;
     checkIfPortIsBinded(mReceiverBindPort);
     if (gVerboseFlag) std::cout << "  JackTrip:startProcess before checkIfPortIsBinded(mSenderBindPort)" << std::endl;
+    std::cout << " ^^^^^^^^^mSenderBindPort " << mSenderBindPort << std::endl;
     checkIfPortIsBinded(mSenderBindPort);
     // Set all classes and parameters
     // ------------------------------
@@ -661,7 +663,7 @@ int JackTrip::clientPingToServerStart()
 
     // Connect Socket to Server and wait for response
     // ----------------------------------------------
-    tcpClient.connectToHost(serverHostAddress, mTcpServerPort);
+    tcpClient.connectToHost(serverHostAddress, mSenderPeerPort);
     if (gVerboseFlag) cout << "Connecting to TCP Server " << serverHostAddress.toString().toStdString()  << endl;
     if (!tcpClient.waitForConnected()) {
         std::cerr << "TCP Socket ERROR: " << tcpClient.errorString().toStdString() <<  endl;
