@@ -215,7 +215,7 @@ public:
         mReceiverPeerPort = port;
     }
     /// \brief Sets port numbers to bind in RECEIVER and SENDER sockets.
-    virtual void setBindPorts(int port)
+    void setBindPorts(int port)
     {
         mReceiverBindPort = port;
         mSenderBindPort = port;
